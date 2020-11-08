@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MERN Shopping cart app",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
@@ -20,7 +21,9 @@
   },
   "homepage": "https://github.com/dkurganskii/mern-shop-ecommerce#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node": "^15.0.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
