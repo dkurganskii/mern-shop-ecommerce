@@ -6,9 +6,15 @@ import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions'
-import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants'
-
+import {
+    getOrderDetails,
+    payOrder,
+    deliverOrder,
+} from '../actions/orderActions'
+import {
+    ORDER_PAY_RESET,
+    ORDER_DELIVER_RESET,
+} from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
     const orderId = match.params.id
@@ -34,6 +40,7 @@ const OrderScreen = ({ match, history }) => {
         const addDecimals = (num) => {
             return (Math.round(num * 100) / 100).toFixed(2)
         }
+
         order.itemsPrice = addDecimals(
             order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
         )
@@ -43,6 +50,7 @@ const OrderScreen = ({ match, history }) => {
         if (!userInfo) {
             history.push('/login')
         }
+
         const addPayPalScript = async () => {
             const { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
@@ -55,7 +63,7 @@ const OrderScreen = ({ match, history }) => {
             document.body.appendChild(script)
         }
 
-        if (!order || successPay || successDeliver) {
+        if (!order || successPay || successDeliver || order._id !== orderId) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch(getOrderDetails(orderId))
@@ -110,6 +118,7 @@ const OrderScreen = ({ match, history }) => {
                                             <Message variant='danger'>Not Delivered</Message>
                                         )}
                                 </ListGroup.Item>
+
                                 <ListGroup.Item>
                                     <h2>Payment Method</h2>
                                     <p>
@@ -122,6 +131,7 @@ const OrderScreen = ({ match, history }) => {
                                             <Message variant='danger'>Not Paid</Message>
                                         )}
                                 </ListGroup.Item>
+
                                 <ListGroup.Item>
                                     <h2>Order Items</h2>
                                     {order.orderItems.length === 0 ? (
@@ -199,12 +209,20 @@ const OrderScreen = ({ match, history }) => {
                                         </ListGroup.Item>
                                     )}
                                     {loadingDeliver && <Loader />}
-                                    {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                                        <ListGroup.Item>
-                                            <Button type='button' className='btn btn-block' onClick={deliverHandler}
-                                            >Mark As Delivered</Button>
-                                        </ListGroup.Item>
-                                    )}
+                                    {userInfo &&
+                                        userInfo.isAdmin &&
+                                        order.isPaid &&
+                                        !order.isDelivered && (
+                                            <ListGroup.Item>
+                                                <Button
+                                                    type='button'
+                                                    className='btn btn-block'
+                                                    onClick={deliverHandler}
+                                                >
+                                                    Mark As Delivered
+                    </Button>
+                                            </ListGroup.Item>
+                                        )}
                                 </ListGroup>
                             </Card>
                         </Col>
@@ -212,4 +230,5 @@ const OrderScreen = ({ match, history }) => {
                 </>
             )
 }
+
 export default OrderScreen

@@ -27,7 +27,11 @@ const ProductEditScreen = ({ match, history }) => {
     const { loading, error, product } = productDetails
 
     const productUpdate = useSelector((state) => state.productUpdate)
-    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
+    const {
+        loading: loadingUpdate,
+        error: errorUpdate,
+        success: successUpdate,
+    } = productUpdate
 
     useEffect(() => {
         if (successUpdate) {
@@ -46,7 +50,6 @@ const ProductEditScreen = ({ match, history }) => {
                 setDescription(product.description)
             }
         }
-
     }, [dispatch, history, productId, product, successUpdate])
 
     const uploadFileHandler = async (e) => {
@@ -58,30 +61,34 @@ const ProductEditScreen = ({ match, history }) => {
         try {
             const config = {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                },
             }
+
             const { data } = await axios.post('/api/upload', formData, config)
+
             setImage(data)
             setUploading(false)
         } catch (error) {
-            console.error(error);
+            console.error(error)
             setUploading(false)
         }
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(updateProduct({
-            _id: productId,
-            name,
-            price,
-            image,
-            brand,
-            category,
-            description,
-            countInStock
-        }))
+        dispatch(
+            updateProduct({
+                _id: productId,
+                name,
+                price,
+                image,
+                brand,
+                category,
+                description,
+                countInStock,
+            })
+        )
     }
 
     return (
@@ -127,8 +134,12 @@ const ProductEditScreen = ({ match, history }) => {
                                         value={image}
                                         onChange={(e) => setImage(e.target.value)}
                                     ></Form.Control>
-                                    <Form.File id='image-file' label='Choose File' custom onChange={uploadFileHandler}>
-                                    </Form.File>
+                                    <Form.File
+                                        id='image-file'
+                                        label='Choose File'
+                                        custom
+                                        onChange={uploadFileHandler}
+                                    ></Form.File>
                                     {uploading && <Loader />}
                                 </Form.Group>
 
