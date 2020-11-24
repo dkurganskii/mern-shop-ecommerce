@@ -1,68 +1,95 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ProShop eCommerce Platform
 
-## Available Scripts
+> eCommerce platform built with the MERN stack & Redux.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Full featured shopping cart
+- Product reviews and ratings
+- Top products carousel
+- Product pagination
+- Product search feature
+- User profile with orders
+- Admin product management
+- Admin user management
+- Admin Order details page
+- Mark orders as delivered option
+- Checkout process (shipping, payment method, etc)
+- PayPal / credit card integration
+- Database seeder (products & users)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Usage
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### ES Modules in Node
 
-### `npm test`
+We use ECMAScript Modules in the backend in this project. Be sure to have at least Node v14.6+ or you will need to add the "--experimental-modules" flag.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Also, when importing a file (not a package), be sure to add .js at the end or you will get a "module not found" error
 
-### `npm run build`
+You can also install and setup Babel if you would like
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Env Variables
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Create a .env file in then root and add the following
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+NODE_ENV = development
+PORT = 5000
+MONGO_URI = your mongodb uri
+JWT_SECRET = 'abc123'
+PAYPAL_CLIENT_ID = your paypal client id
+```
 
-### `npm run eject`
+### Install Dependencies (frontend & backend)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm install
+cd frontend
+npm install
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Run
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+# Run frontend (:3000) & backend (:5000)
+npm run dev
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Run backend only
+npm run server
+```
 
-## Learn More
+## Build & Deploy
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+# Create frontend prod build
+cd frontend
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+There is a Heroku postbuild script, so if you push to Heroku, no need to build manually for deployment to Heroku
 
-### Code Splitting
+### Seed Database
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+You can use the following commands to seed the database with some sample users and products as well as destroy all data
 
-### Analyzing the Bundle Size
+```
+# Import data
+npm run data:import
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+# Destroy data
+npm run data:destroy
+```
 
-### Making a Progressive Web App
+```
+Sample User Logins
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+admin@example.com (Admin)
+123456
 
-### Advanced Configuration
+john@example.com (Customer)
+123456
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+jane@example.com (Customer)
+123456
+```
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
