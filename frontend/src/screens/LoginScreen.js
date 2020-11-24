@@ -68,6 +68,20 @@ const LoginScreen = ({ location, history }) => {
           </Link>
                 </Col>
             </Row>
+            <Col>
+                <br />
+                <Row>
+                    Sample User Logins:
+                </Row>
+                <Row>admin@example.com (Admin)
+                123456
+                </Row>
+                <Row>john@example.com (Customer)
+                123456</Row>
+                <Row>jane@example.com (Customer)
+                123456</Row>
+            </Col>
+
         </FormContainer>
     )
 }
