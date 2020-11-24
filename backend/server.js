@@ -5,6 +5,8 @@ import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
+import pkg from 'cloudinary'
+const cloudinary = pkg
 
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -22,6 +24,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json())
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+})
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
