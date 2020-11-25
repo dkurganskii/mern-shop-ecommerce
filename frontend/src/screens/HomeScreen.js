@@ -47,12 +47,16 @@ const HomeScreen = ({ match }) => {
                                         <Product product={product} />
                                     </Col>
                                 ))}
+
                             </Row>
-                            <Paginate
-                                pages={pages}
-                                page={page}
-                                keyword={keyword ? keyword : ''}
-                            />
+
+                            <Col id='paginate'>
+                                <Paginate
+                                    pages={pages}
+                                    page={page}
+                                    keyword={keyword ? keyword : ''}
+                                />
+                            </Col>
                         </>
                     )}
         </>

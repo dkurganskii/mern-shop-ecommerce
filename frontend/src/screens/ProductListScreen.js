@@ -129,7 +129,9 @@ const ProductListScreen = ({ history, match }) => {
                                     ))}
                                 </tbody>
                             </Table>
-                            <Paginate pages={pages} page={page} isAdmin={true} />
+                            <Col id='paginate'>
+                                <Paginate pages={pages} page={page} isAdmin={true} />
+                            </Col>
                         </>
                     )}
         </>
