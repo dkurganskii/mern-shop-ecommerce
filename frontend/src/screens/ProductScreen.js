@@ -11,6 +11,7 @@ import {
     createProductReview,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import { addToCart } from '../actions/cartActions'
 
 const ProductScreen = ({ history, match }) => {
     const [qty, setQty] = useState(1)
@@ -44,7 +45,8 @@ const ProductScreen = ({ history, match }) => {
     }, [dispatch, match, successProductReview, product._id])
 
     const addToCartHandler = () => {
-        history.push(`/cart/${match.params.id}?qty=${qty}`)
+        dispatch(addToCart(product._id, qty))
+        history.push('/cart')
     }
 
     const submitHandler = (e) => {
