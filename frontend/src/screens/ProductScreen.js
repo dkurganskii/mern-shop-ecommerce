@@ -44,6 +44,10 @@ const ProductScreen = ({ history, match }) => {
         }
     }, [dispatch, match, successProductReview, product._id])
 
+    // const addToCartHandler = () => {
+    //     history.push(`/cart/${match.params.id}?qty=${qty}`)
+    // }
+
     const addToCartHandler = () => {
         dispatch(addToCart(product._id, qty))
         history.push('/cart')
@@ -72,10 +76,10 @@ const ProductScreen = ({ history, match }) => {
                         <>
                             <Meta title={product.name} />
                             <Row>
-                                <Col md={6}>
+                                <Col className="product-page-section" md={6}>
                                     <Image src={product.image} alt={product.name} fluid />
                                 </Col>
-                                <Col md={3}>
+                                <Col className="product-page-section" md={3}>
                                     <ListGroup variant='flush'>
                                         <ListGroup.Item>
                                             <h3>{product.name}</h3>
@@ -92,13 +96,13 @@ const ProductScreen = ({ history, match }) => {
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
-                                <Col md={3}>
+                                <Col className="product-page-section" md={3}>
                                     <Card>
                                         <ListGroup variant='flush'>
                                             <ListGroup.Item>
                                                 <Row>
-                                                    <Col>Price:</Col>
-                                                    <Col>
+                                                    <Col className="product-page-section">Price:</Col>
+                                                    <Col className="product-page-section">
                                                         <strong>${product.price}</strong>
                                                     </Col>
                                                 </Row>
@@ -106,8 +110,8 @@ const ProductScreen = ({ history, match }) => {
 
                                             <ListGroup.Item>
                                                 <Row>
-                                                    <Col>Status:</Col>
-                                                    <Col>
+                                                    <Col className="product-page-section">Status:</Col>
+                                                    <Col className="product-page-section">
                                                         {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                                                     </Col>
                                                 </Row>
@@ -116,8 +120,8 @@ const ProductScreen = ({ history, match }) => {
                                             {product.countInStock > 0 && (
                                                 <ListGroup.Item>
                                                     <Row>
-                                                        <Col>Qty</Col>
-                                                        <Col>
+                                                        <Col className="product-page-section">Qty</Col>
+                                                        <Col >
                                                             <Form.Control
                                                                 as='select'
                                                                 value={qty}
@@ -151,7 +155,7 @@ const ProductScreen = ({ history, match }) => {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={6}>
+                                <Col className="product-page-section" md={6}>
                                     <h2>Reviews</h2>
                                     {product.reviews.length === 0 && <Message>No Reviews</Message>}
                                     <ListGroup variant='flush'>
