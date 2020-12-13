@@ -75,6 +75,23 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc    Update order to cancelled
+// @route   GET /api/orders/:id/cancel
+// @access  Private
+const updateOrderToCancelled = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+
+    if (order) {
+        order.isCancelled = true
+        const cancelledOrder = await order.save()
+
+        res.json(cancelledOrder)
+    } else {
+        res.status(404)
+        throw new Error('Order not found')
+    }
+})
+
 // @desc    Update order to delivered
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
@@ -117,5 +134,6 @@ export {
     updateOrderToDelivered,
     getMyOrders,
     getOrders,
+    updateOrderToCancelled
 }
 

@@ -64,6 +64,12 @@ const orderSchema = mongoose.Schema({
         default: false
     },
 
+    isCancelled: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+
     paidAt: {
         type: Date
     },

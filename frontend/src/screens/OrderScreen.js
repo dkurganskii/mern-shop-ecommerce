@@ -10,10 +10,15 @@ import {
     getOrderDetails,
     payOrder,
     deliverOrder,
+    cancelOrder
 } from '../actions/orderActions'
 import {
     ORDER_PAY_RESET,
     ORDER_DELIVER_RESET,
+    ORDER_CANCEL_REQUEST,
+    ORDER_LIST_MY_RESET,
+    ORDER_CANCEL_SUCCESS,
+    ORDER_CANCEL_RESET
 } from '../constants/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
@@ -31,6 +36,9 @@ const OrderScreen = ({ match, history }) => {
 
     const orderDeliver = useSelector((state) => state.orderDeliver)
     const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+    const orderCancel = useSelector((state) => state.orderCancel)
+    const { loading: loadingCancel, success: successCancel } = orderCancel
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -76,6 +84,17 @@ const OrderScreen = ({ match, history }) => {
         }
     }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo])
 
+
+    useEffect(() => {
+        if (successCancel) {
+            dispatch({ type: ORDER_PAY_RESET })
+            dispatch({ type: ORDER_DELIVER_RESET })
+            dispatch({ type: ORDER_CANCEL_RESET })
+            dispatch(getOrderDetails(orderId))
+        }
+    }, [successCancel])
+
+
     const successPaymentHandler = (paymentResult) => {
         console.log(paymentResult)
         dispatch(payOrder(orderId, paymentResult))
@@ -83,6 +102,10 @@ const OrderScreen = ({ match, history }) => {
 
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
+    }
+
+    const cancelHandler = () => {
+        dispatch(cancelOrder(order))
     }
 
     return loading ? (
@@ -130,6 +153,9 @@ const OrderScreen = ({ match, history }) => {
                                     ) : (
                                             <Message variant='danger'>Not Paid</Message>
                                         )}
+
+                                    {order.isCancelled && <Message variant='danger'>Cancelled</Message>}
+
                                 </ListGroup.Item>
 
                                 <ListGroup.Item>
@@ -163,10 +189,25 @@ const OrderScreen = ({ match, history }) => {
                                             </ListGroup>
                                         )}
                                 </ListGroup.Item>
+
                             </ListGroup>
+
+
+                            <br />
+                            <Col>
+                                {!order.isPaid &&
+                                    !order.isDelivered && !order.isCancelled && (
+                                        <Button
+                                            type='button'
+                                            onClick={cancelHandler}>Cancel Order</Button>
+                                    )}
+                            </Col>
+
+
+
                         </Col>
                         <Col md={4}>
-                            <Card>
+                            {!order.isCancelled && <Card>
                                 <ListGroup variant='flush'>
                                     <ListGroup.Item>
                                         <h2>Order Summary</h2>
@@ -220,11 +261,13 @@ const OrderScreen = ({ match, history }) => {
                                                     onClick={deliverHandler}
                                                 >
                                                     Mark As Delivered
-                    </Button>
+                                                  </Button>
                                             </ListGroup.Item>
+
                                         )}
                                 </ListGroup>
-                            </Card>
+                            </Card>}
+
                         </Col>
                     </Row>
                 </>
