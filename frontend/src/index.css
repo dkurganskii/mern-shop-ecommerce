@@ -32,11 +32,11 @@ h2 {
   padding: 10px;
   box-sizing: border-box;
 }
- 
+
 .carousel-caption h4 {
   color: #fff;
 }
- 
+
 .carousel img {
   display: block;
   height: 300px;
@@ -49,27 +49,24 @@ h2 {
 .carousel a {
   margin: 0 auto;
 }
- 
+
 @media (max-width: 900px) {
   .carousel-caption h4 {
     font-size: 2.5vw;
   }
 }
 
-#paginate{
+#paginate {
   display: flex;
   justify-content: center;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1200px) {
-     
   .product-page-section {
     min-width: 350px;
   }
- 
+
   .product-page-section:nth-child(3) {
     margin: 20px 0 0 50%;
   }
 }
-
-

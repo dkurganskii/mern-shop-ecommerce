@@ -2,11 +2,16 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
+import Badge from 'react-bootstrap/Badge'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import SearchBox from './SearchBox'
 import { logout } from '../actions/userActions'
 
 const Header = () => {
+
+    const cart = useSelector((state) => state.cart)
+    const { cartItems } = cart
+
     const dispatch = useDispatch()
 
     const userLogin = useSelector((state) => state.userLogin)
@@ -27,10 +32,11 @@ const Header = () => {
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Route render={({ history }) => <SearchBox history={history} />} />
                         <Nav className='ml-auto'>
-                            <LinkContainer to='/cart'>
+                            <LinkContainer to='/cart'> 
                                 <Nav.Link>
                                     <i className='fas fa-shopping-cart'></i> Cart
-                </Nav.Link>
+                                    {cartItems.length >= 1 && <Badge style={{ fontSize: '12px'}} pill variant="info">{cartItems.length}</Badge>}
+                                </Nav.Link>
                             </LinkContainer>
                             {userInfo ? (
                                 <NavDropdown title={userInfo.name} id='username'>
